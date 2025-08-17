@@ -3,7 +3,7 @@ import { View, Text, Button, ScrollView, Image } from "react-native";
 import { Link } from "expo-router";
 import { usePeriodicCapture } from "@/hooks/usePeriodicCapture";
 import { initScreenshotDir, listScreenshots, captureAndSave } from "@/services/screenshotService";
-import { initBackground, runHeartbeatOnceNow } from "@/services/ background";
+import { initBackground, runHeartbeatOnceNow } from "@/services/background";
 
 export default function Home() {
   const rootRef = useRef<View>(null); // Ref que puede ser null

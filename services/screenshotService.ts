@@ -2,13 +2,25 @@ import { RefObject } from "react";
 import { View } from "react-native";
 import { captureRef } from "react-native-view-shot";
 import * as FileSystem from "expo-file-system";
+import * as MediaLibrary from 'expo-media-library';
 import { SCREENSHOT_DIR, ensureDirAsync } from "@/constants/paths";
 
 export const initScreenshotDir = async () => {
     await ensureDirAsync(SCREENSHOT_DIR);
 };
 
+export async function ensureStoragePermission() {
+  const { status } = await MediaLibrary.requestPermissionsAsync();
+  return status === 'granted';
+}
+
 export const captureAndSave = async (rootRef: RefObject<View | null>) => {
+    // Solicita permiso antes de continuar
+    const hasPermission = await ensureStoragePermission();
+    if (!hasPermission) {
+        throw new Error("Permiso de almacenamiento denegado");
+    }
+
     if (!rootRef.current) return null;
 
     // Captura la vista raíz de TU app (simulación)
